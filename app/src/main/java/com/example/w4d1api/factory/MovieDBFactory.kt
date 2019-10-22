@@ -5,17 +5,17 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class GitFactory {
+class MovieDBFactory {
     val BASE_URL = "https://api.themoviedb.org/3/"
     val API_KEY = "90bacac1e9b6f39c15b8ed77c50dd9be"
 
-    private lateinit var gitService: GitService
+    private lateinit var gitService: MovieDBService
 
     init {
         gitService = createGitService(getRetrofitInstance())
     }
-    private fun createGitService(retrofitInstance: Retrofit): GitService {
-        return retrofitInstance.create(GitService::class.java)
+    private fun createGitService(retrofitInstance: Retrofit): MovieDBService {
+        return retrofitInstance.create(MovieDBService::class.java)
     }
 
     private fun getRetrofitInstance(): Retrofit{

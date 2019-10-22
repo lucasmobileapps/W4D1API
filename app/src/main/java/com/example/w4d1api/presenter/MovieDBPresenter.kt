@@ -1,15 +1,15 @@
 package com.example.w4d1api.presenter
 
 import android.util.Log
-import com.example.w4d1api.factory.GitFactory
+import com.example.w4d1api.factory.MovieDBFactory
 import com.example.w4d1api.model.MoviedbQuery
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MovieDBPresenter (private val myView: Contract.ViewInterface): Contract.PresenterInterface{
-    override fun getGitRepos() {
-        val gitService = GitFactory()
+    override fun getMovieDBRepos() {
+        val gitService = MovieDBFactory()
 
         gitService.getGitRepos().enqueue(object : Callback<List<MoviedbQuery>> {
             override fun onFailure(call: Call<List<MoviedbQuery>>, t: Throwable) {

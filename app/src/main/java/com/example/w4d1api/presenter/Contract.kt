@@ -4,7 +4,7 @@ import com.example.w4d1api.model.MoviedbQuery
 
 interface Contract {
     interface PresenterInterface{
-        fun getGitRepos()
+        fun getMovieDBRepos()
     }
     interface ViewInterface{
         fun displayRepos(repository: List<MoviedbQuery>)
