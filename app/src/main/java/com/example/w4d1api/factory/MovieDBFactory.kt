@@ -9,22 +9,24 @@ class MovieDBFactory {
     val BASE_URL = "https://api.themoviedb.org/3/"
     val API_KEY = "90bacac1e9b6f39c15b8ed77c50dd9be"
 
-    private lateinit var gitService: MovieDBService
+    private lateinit var movieService: MovieDBService
 
     init {
-        gitService = createGitService(getRetrofitInstance())
+        movieService = createMovieService(getRetrofitInstance())
     }
-    private fun createGitService(retrofitInstance: Retrofit): MovieDBService {
+
+    private fun createMovieService(retrofitInstance: Retrofit): MovieDBService {
         return retrofitInstance.create(MovieDBService::class.java)
     }
 
-    private fun getRetrofitInstance(): Retrofit{
+    private fun getRetrofitInstance(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    fun getGitRepos(): Call<List<MoviedbQuery>> {
-        return gitService.getMyRepositories(API_KEY, "title")
+
+    fun getMovieDBRepos(title: String): Call<MoviedbQuery> {
+        return movieService.getMyRepositories(API_KEY, title)
     }
 }

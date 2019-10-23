@@ -8,23 +8,28 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MovieDBPresenter (private val myView: Contract.ViewInterface): Contract.PresenterInterface{
-    override fun getMovieDBRepos() {
-        val gitService = MovieDBFactory()
+    override fun getMovieDBRepos(title: String) {
+        val movieDBService = MovieDBFactory()
 
-        gitService.getGitRepos().enqueue(object : Callback<List<MoviedbQuery>> {
-            override fun onFailure(call: Call<List<MoviedbQuery>>, t: Throwable) {
+        movieDBService.getMovieDBRepos(title).enqueue(object : Callback<MoviedbQuery> {
+
+            override fun onFailure(call: Call<MoviedbQuery>, t: Throwable) {
                 Log.d("LOG_X", t.toString())
             }
 
             override fun onResponse(
-                call: Call<List<MoviedbQuery>>,
-                response: Response<List<MoviedbQuery>>
+                call: Call<MoviedbQuery>,
+                response: Response<MoviedbQuery>
             ) {
                 response.body()?.let {myRepos ->
-                    myView.displayRepos(myRepos)
+                    var movieRepos = myRepos.results?.map {eachItem->
+                        eachItem!!
+                    }?: listOf()
+
+                    myView.displayRepos(movieRepos)
                 }
 
-                Log.d("LOG_X", "I have ${response.body()?.size}")
+                //Log.d("LOG_X", "I have ${response.body()?.size}")
             }
 
         })

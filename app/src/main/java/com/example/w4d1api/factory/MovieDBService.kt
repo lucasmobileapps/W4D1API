@@ -4,6 +4,7 @@ import com.example.w4d1api.model.MoviedbQuery
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 //API Key =  90bacac1e9b6f39c15b8ed77c50dd9be
 // https://api.themoviedb.org/3/search/movie?api_key=90bacac1e9b6f39c15b8ed77c50dd9be&query=disney
@@ -11,7 +12,7 @@ import retrofit2.http.Path
 
 interface MovieDBService{
     //search/movie?api_key=90bacac1e9b6f39c15b8ed77c50dd9be&query=disney
-    @GET("search/movie?api_key={api_key}&query={title}")
-    fun getMyRepositories(@Path("api_key") userName: String,
-                          @Path("title") itemType: String) : Call<List<MoviedbQuery>>
+    @GET("search/movie")
+    fun getMyRepositories(@Query("api_key") apiKey: String,
+                          @Query("query") title: String) : Call<MoviedbQuery>
 }
