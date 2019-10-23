@@ -1,5 +1,6 @@
 package com.example.w4d1api.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.w4d1api.R
 import com.example.w4d1api.model.Result
 
@@ -29,10 +33,21 @@ class MovieAdapter(private val movieadapterDelegate: MovieAdapterDelegate)
         holder.apply {
             movieName.text = getItem(position).title
             movieType.text = getItem(position).releaseDate
-           //Z movieImageview = getItem(position).
             viewGroup.setOnClickListener{
                 movieadapterDelegate.movieSelect(getItem(position))
             }
+            viewGroup.context?.let {
+                val url = "https://image.tmdb.org/t/p/w185/${getItem(position).posterPath}"
+                Glide.with(it) //1
+                    .load(url)
+                    .placeholder(R.drawable.ic_movie)
+                    .error(R.drawable.ic_movie)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .into(movieImageview)
+                Log.d("LOG_X", url)
+            }
+
         }
     }
     class MovieViewHolder(view: View): RecyclerView.ViewHolder(view){
