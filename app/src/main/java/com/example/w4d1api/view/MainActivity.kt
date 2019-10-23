@@ -3,20 +3,18 @@ package com.example.w4d1api.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.w4d1api.R
 import com.example.w4d1api.adapter.MovieAdapter
-import com.example.w4d1api.factory.MovieDBFactory
-import com.example.w4d1api.factory.MovieDBService
-import com.example.w4d1api.model.MoviedbQuery
 import com.example.w4d1api.model.Result
 import com.example.w4d1api.presenter.Contract
 import com.example.w4d1api.presenter.MovieDBPresenter
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.StringBuilder
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.w4d1api.R
+
 
 class MainActivity : AppCompatActivity(), Contract.ViewInterface, MovieAdapter.MovieAdapterDelegate {
 
@@ -28,8 +26,10 @@ class MainActivity : AppCompatActivity(), Contract.ViewInterface, MovieAdapter.M
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(com.example.w4d1api.R.layout.activity_main)
         setUpRecyclerView()
+
+
 
 
 
@@ -37,6 +37,12 @@ class MainActivity : AppCompatActivity(), Contract.ViewInterface, MovieAdapter.M
         my_button.setOnClickListener{
             searchTitle = my_edittext.text.toString()
             myPresenter.getMovieDBRepos(searchTitle)
+
+            val mainLayout: ConstraintLayout = findViewById(R.id.main_layout)
+
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(mainLayout.windowToken, 0)
+
 
             Log.d("LOG_X", "")
         }
@@ -58,8 +64,8 @@ class MainActivity : AppCompatActivity(), Contract.ViewInterface, MovieAdapter.M
         movie_recyclerview.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
 
 
-        val itemDecorator = DividerItemDecoration(this, LinearLayout.VERTICAL)
-        movie_recyclerview.addItemDecoration(itemDecorator)
+        //val itemDecorator = DividerItemDecoration(this, LinearLayout.VERTICAL)
+        //movie_recyclerview.addItemDecoration(itemDecorator)
     }
 
 
